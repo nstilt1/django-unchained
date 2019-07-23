@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'unchained',
-    'Business'
+    'Business',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -66,7 +67,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'djangoFirstProject.wsgi.application'
+WSGI_APPLICATION = 'unchained.wsgi.application'
 
 
 # Database
@@ -75,8 +76,8 @@ WSGI_APPLICATION = 'djangoFirstProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'nstil', #was 'db_name'
-        'USER': 'nstil', #was 'db_user'
+        'NAME': 'postgres', #was 'db_name'
+        'USER': 'postgres', #was 'db_user'
         'PASSWORD': 'boOpiedo0piedoop', #was 'db_user_password'
         'HOST': '127.0.0.1', #was ''
         'PORT': '5432', #was 'db_port_number'
