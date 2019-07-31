@@ -4,6 +4,7 @@ from Business import views
 
 router = routers.DefaultRouter()
 router.register(r'businesses', views.BusinessViewSet)
+router.register(r'employees', views.EmployeeViewSet)
 
 
 urlpatterns = [
