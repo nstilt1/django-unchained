@@ -32,13 +32,13 @@ class BusinessEmployee(models.Model):
     business = models.ForeignKey(
         'Business',
         on_delete=models.CASCADE,
-        related_name='',
+        related_name='business',
         null=True
     )
     employee = models.ForeignKey(
         'Employee',
         on_delete=models.CASCADE,
-        related_name='',
+        related_name='employee',
         null=True
     )
     is_owner = models.BooleanField(null=True)

@@ -18,7 +18,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     '''
     queryset = models.Employee.objects.all()
     serializer_class = serializers.EmployeeSerializer
-class BusinessWmployeeViewSet(viewsets.ModelViewSet):
+class BusinessEmployeeViewSet(viewsets.ModelViewSet):
     '''
     API endpoint that allows Business Employees to be viewed or edited
     maybe
