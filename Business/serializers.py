@@ -26,10 +26,10 @@ class BusinessSerializer(serializers.ModelSerializer):
     def create(self, validated):
         employee_data = validated.pop('employees_of_company')
     
-        
         business=models.Business.objects.create(**validated)
         for employee in employee_data:
-            models.Employee.objects.create(**employee, business=business)
+            new_employee = models.Employee.objects.create(**employee, business=business)
+            models.BusinessEmployee.objects.create(employee=new_employee, business=business, is_owner=False)
         return business
     #def RelatedField.to_representation(self):
 
@@ -37,3 +37,9 @@ class BusinessSerializer(serializers.ModelSerializer):
         model = models.Business
         fields = ['title', 'description', 'address', 'id', 'employees_of_company']
 
+class BusinessEmployeeSerializer(serializers.ModelSerializer):
+    business = BusinessSerializer(many=True)
+    employee = EmployeeSerializer(many=True)
+    class Meta:
+        model = models.BusinessEmployee
+        fields = ['business', 'employee', 'is_owner', 'id']
