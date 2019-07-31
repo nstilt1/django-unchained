@@ -29,7 +29,7 @@ class BusinessSerializer(serializers.ModelSerializer):
         business=models.Business.objects.create(**validated)
         for employee in employee_data:
             new_employee = models.Employee.objects.create(**employee, business=business)
-            models.BusinessEmployee.objects.create(employee=new_employee, business=business, is_owner=Null)
+            models.BusinessEmployee.objects.create(employee=new_employee, business=business, is_owner=False)
         return business
     #def RelatedField.to_representation(self):
 
