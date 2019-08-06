@@ -3,10 +3,35 @@ from . import models
 
 class EmployeeSerializer(serializers.ModelSerializer):
 
+    def custom_field(self):
+        return "%s, %s, " "" % last_name, first_name
+    full_name = "f a"
     class Meta:
         model = models.Employee
-        fields = ['first_name', 'last_name', 'email', 'business', 'id']
-    
+        fields = ['first_name', 'last_name', 'email', 'id']
+
+class BusinessEmployeeSerializer(serializers.ModelSerializer):
+    #business_of_employee = BusinessSerializer()
+    #employee_of_business = EmployeeSerializer()
+    #employee_from_business = Employee.objects.select_related().get(id=id)
+
+
+    employee_first_name = serializers.SerializerMethodField()
+    employee_last_name = serializers.SerializerMethodField()
+
+    def get_employee_last_name(self, obj):
+        employee_last_name = getattr(obj.employee_of_business, 'last_name', None)
+        return employee_last_name
+
+    def get_employee_first_name(self, obj):
+        employee_first_name = getattr(obj.employee_of_business, 'first_name', None)
+        return employee_first_name
+
+    class Meta:
+        model = models.BusinessEmployee
+        fields = ['employee_first_name', 'employee_last_name', 'business_of_employee','employee_of_business', 'is_owner', 'id']
+
+
 
 class BusinessSerializer(serializers.ModelSerializer):
     #- the model itself has `title`, `description`, `address` and `employees`.
@@ -22,24 +47,18 @@ class BusinessSerializer(serializers.ModelSerializer):
      #   return "%s, %s" % value.last_name, value.first_name
 
     #employees_of_company = serializers.RelatedField(source='employee', read_only=True, many=True)
-    employees_of_company = EmployeeSerializer(many=True)
+    business_of_employee = BusinessEmployeeSerializer(many=True)
     def create(self, validated):
-        employee_data = validated.pop('employees_of_company')
+        employee_data = validated.pop('employees_of_business')
     
         business=models.Business.objects.create(**validated)
         for employee in employee_data:
-            new_employee = models.Employee.objects.create(**employee, business=business)
-            models.BusinessEmployee.objects.create(employee=new_employee, business=business, is_owner=False)
+            new_employee = models.Employee.objects.create(**employee)
+            models.BusinessEmployee.objects.create(employee_of_business=new_employee, business_of_employee=business, is_owner=False)
         return business
     #def RelatedField.to_representation(self):
 
     class Meta:
         model = models.Business
-        fields = ['title', 'description', 'address', 'id', 'employees_of_company']
+        fields = ['title', 'description', 'address', 'id', 'business_of_employee']
 
-class BusinessEmployeeSerializer(serializers.ModelSerializer):
-    business = BusinessSerializer(many=True)
-    employee = EmployeeSerializer(many=True)
-    class Meta:
-        model = models.BusinessEmployee
-        fields = ['business', 'employee', 'is_owner', 'id']
