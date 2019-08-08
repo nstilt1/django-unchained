@@ -2,10 +2,7 @@ from rest_framework import serializers
 from . import models
 
 class EmployeeSerializer(serializers.ModelSerializer):
-
-    def custom_field(self):
-        return "%s, %s, " "" % last_name, first_name
-    full_name = "f a"
+    
     class Meta:
         model = models.Employee
         fields = ['first_name', 'last_name', 'email', 'id']
