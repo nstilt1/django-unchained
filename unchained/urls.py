@@ -14,7 +14,7 @@ router.register(r'business-employees', views.BusinessEmployeeViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    #path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     #path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     #url(r'^api-token-auth/', obtain_auth_token),
     url(r'^api-token-auth/', CustomAuthToken.as_view())

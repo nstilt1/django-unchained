@@ -1,8 +1,12 @@
 from rest_framework import serializers
 from . import models
 
+#class URLSerializer(serializers.HyperlinkedSerializer):
+    #model = models.URL
+    #fields = ['']
+
 class EmployeeSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = models.Employee
         fields = ['first_name', 'last_name', 'email', 'id']
