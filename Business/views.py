@@ -1,6 +1,6 @@
 #from django.shortcuts import render
 from rest_framework import viewsets
-from rest_framework.decorators import action, api_view, permission_classes
+from rest_framework.decorators import action, permission_classes
 from . import models
 from . import serializers
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
@@ -51,7 +51,9 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = models.Employee.objects.all()
     serializer_class = serializers.EmployeeSerializer
 
-    
+    #def delete(self, request, pk, format=None):
+        #if(IsBusinessOwner):
+            
 
 class BusinessEmployeeViewSet(viewsets.ModelViewSet):
     '''
